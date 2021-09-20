@@ -1,30 +1,23 @@
 package my.app.dao;
 
 import my.app.entity.Car;
-
-
-import my.app.entity.TehPassport;
+import my.app.entity.Insurance;
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
 import org.hibernate.cfg.Configuration;
 
-public class TehpassportHibernateDao {
+public class InsuranceHibernateDao {
     public static void main(String[] args) {
-     Car car = new Car(1, "buba", 50);
-        TehPassport tehPassport = new TehPassport();
-        tehPassport.setSerialNumber("sdag23");
-        tehPassport.setCreateDate("12/123/545");
+        Car car = new CarHibernateDao().readCarById(2);
+        Insurance insurance = new Insurance();
+        insurance.setInsuranceclass("Perfect");
+        insurance.setCar(car);
+        new InsuranceHibernateDao().create(insurance);
 
-        Car car1 = new CarHibernateDao().readCarById(1);
-        tehPassport.setCar(car1);
-
-        TehpassportHibernateDao tehpassportHibernateDao = new TehpassportHibernateDao();
-        tehpassportHibernateDao.create(tehPassport);
     }
-
-    public void create(TehPassport tehPassport) {
+    public void create(Insurance insurance) {
         try {
             SessionFactory sessionFactory = new Configuration().configure().buildSessionFactory();
             Session session = sessionFactory.openSession();
@@ -32,7 +25,7 @@ public class TehpassportHibernateDao {
 
 
             try {
-                session.save(tehPassport);
+                session.save(insurance);
                 transaction.commit();
             } catch (Exception e) {
                 e.printStackTrace();

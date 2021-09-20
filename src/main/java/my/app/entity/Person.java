@@ -1,6 +1,7 @@
 package my.app.entity;
 
 import javax.persistence.*;
+import java.util.List;
 
 @Entity
 @Table(name = "person")
@@ -18,6 +19,10 @@ public class Person {
 
     @OneToOne(mappedBy = "person", cascade = CascadeType.ALL)
     private Passport passport;
+
+    @OneToMany(mappedBy = "person", cascade = CascadeType.ALL)
+    private List<Phone> phoneList;
+
 
     public Person() {
     }
@@ -63,5 +68,13 @@ public class Person {
 
     public void setPassport(Passport passport) {
         this.passport = passport;
+    }
+
+    public List<Phone> getPhoneList() {
+        return phoneList;
+    }
+
+    public void setPhoneList(List<Phone> phoneList) {
+        this.phoneList = phoneList;
     }
 }

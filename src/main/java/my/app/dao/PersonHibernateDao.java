@@ -30,6 +30,7 @@ public class PersonHibernateDao implements PersonDao {
 //        new PersonHibernateDao().deletePersonById(20);
 //        new PersonHibernateDao().updatePerson(new Person( 30,"Vasa", 30));
     }
+
     @Override
     public void createPerson(Person person) {
         try {
@@ -51,25 +52,31 @@ public class PersonHibernateDao implements PersonDao {
         }
     }
 
-        @Override
+    @Override
     public Person readPersonById(int id) {
+
+        Session session = null;
+        try {
+            SessionFactory sessionFactory = new Configuration().configure().buildSessionFactory();
+            session = sessionFactory.openSession();
+            Transaction transaction = session.beginTransaction();
+
+
             try {
-                SessionFactory sessionFactory = new Configuration().configure().buildSessionFactory();
-                Session session = sessionFactory.openSession();
-                Transaction transaction = session.beginTransaction();
-
-
-                try {
-                 Person person = session.get(Person.class, id);
-                 return person;
-                } catch (Exception e) {
-                    e.printStackTrace();
-
-
-                }
-            } catch (HibernateException e) {
+                Person person = session.get(Person.class, id);
+                return person;
+            } catch (Exception e) {
                 e.printStackTrace();
+
+
             }
+        } catch (HibernateException e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                session.close();
+            } catch (Exception e) {  /*do nothing...*/ }
+        }
         return null;
     }
 
@@ -78,7 +85,6 @@ public class PersonHibernateDao implements PersonDao {
         try {
             SessionFactory sessionFactory = new Configuration().configure().buildSessionFactory();
             Session session = sessionFactory.openSession();
-
 
 
             try {
@@ -104,12 +110,12 @@ public class PersonHibernateDao implements PersonDao {
 
 
             try {
-               Person person = session.get(Person.class, updatedPerson.getId());
-               person.setName(updatedPerson.getName());
-               person.setAge(updatedPerson.getAge());
-               session.update(person);
+                Person person = session.get(Person.class, updatedPerson.getId());
+                person.setName(updatedPerson.getName());
+                person.setAge(updatedPerson.getAge());
+                session.update(person);
 
-               transaction.commit();
+                transaction.commit();
 
             } catch (Exception e) {
                 e.printStackTrace();
@@ -142,8 +148,6 @@ public class PersonHibernateDao implements PersonDao {
         } catch (HibernateException e) {
             e.printStackTrace();
         }
-
-
 
 
     }

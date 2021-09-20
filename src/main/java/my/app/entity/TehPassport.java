@@ -13,7 +13,7 @@ public class TehPassport {
     @Column(name = "serialnumber")
     private String serialNumber;
 
-    @Column(name = "cratedate")
+    @Column(name = "createdate")
     private String createDate;
 
     //    @Column(name = "fk_carId")

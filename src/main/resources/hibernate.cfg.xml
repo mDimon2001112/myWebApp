@@ -33,6 +33,9 @@
         <mapping class="my.app.entity.Passport"/>
         <mapping class="my.app.entity.Car"/>
         <mapping class="my.app.entity.TehPassport"/>
+        <mapping class="my.app.entity.Phone"/>
+        <mapping class="my.app.entity.Insurance"/>
+
 
 
 

@@ -1,9 +1,37 @@
 package my.app.entity;
 
+import javax.persistence.*;
+import java.util.List;
+
+@Entity
+@Table(name = "car")
 public class Car {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id")
     private int id;
+
+    @Column(name = "car_name")
     private  String carName;
+
+    @Column
     private int age;
+
+    @OneToMany(mappedBy = "car", cascade = CascadeType.ALL)
+    private List<Insurance> insuranceList;
+
+    public Car(int id, List<Insurance> insuranceList) {
+        this.id = id;
+        this.insuranceList = insuranceList;
+    }
+
+    public List<Insurance> getInsuranceList() {
+        return insuranceList;
+    }
+
+    public void setInsuranceList(List<Insurance> insuranceList) {
+        this.insuranceList = insuranceList;
+    }
 
     public Car() {
     }

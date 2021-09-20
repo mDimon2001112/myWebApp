@@ -14,7 +14,8 @@ import java.util.List;
 
 public class CarHibernateDao implements CarDao {
     public static void main(String[] args) {
-        new CarHibernateDao().createCar(new Car("Vova", 35));
+        new CarHibernateDao().createCar(new Car("Byhanka", 35));
+        new CarHibernateDao().readCarById(5);
     }
 
     @Override
@@ -41,7 +42,6 @@ public class CarHibernateDao implements CarDao {
     }
 
 
-
     @Override
     public Car readCarById(int id) {
         try {
@@ -55,8 +55,8 @@ public class CarHibernateDao implements CarDao {
                 return car;
             } catch (Exception e) {
                 e.printStackTrace();
-
-
+            } finally {
+                session.close();
             }
         } catch (HibernateException e) {
             e.printStackTrace();
@@ -70,7 +70,6 @@ public class CarHibernateDao implements CarDao {
         try {
             SessionFactory sessionFactory = new Configuration().configure().buildSessionFactory();
             Session session = sessionFactory.openSession();
-
 
 
             try {
@@ -114,7 +113,6 @@ public class CarHibernateDao implements CarDao {
         }
 
 
-
     }
 
     @Override
@@ -137,7 +135,6 @@ public class CarHibernateDao implements CarDao {
         } catch (HibernateException e) {
             e.printStackTrace();
         }
-
 
 
     }
